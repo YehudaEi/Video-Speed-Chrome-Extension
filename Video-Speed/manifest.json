@@ -1,0 +1,24 @@
+{
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2,
+  "name": "Video Speed",
+  "permissions": ["*://*/*", "storage"],
+  "content_scripts": [{
+    "js": ["js/jquery.js", "js/content.js"],
+    "matches": ["*://*/*"]
+  }],
+  "author": {
+    "name": "Yehuda Eisenberg",
+    "github": "https://github.com/YehudaEi",
+    "url": "https://YehudaE.net"
+  },
+  "icons": {
+    "16": "icons/logo.png",
+    "32": "icons/logo.png",
+    "48": "icons/logo.png",
+    "128": "icons/logo.png"
+  },
+  "version": "1.0"
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Yehuda Eisenberg">
+    <style>
+      body {text-align: center; width: 350px;}
+      .controls button {font-size: 20px; margin-left: auto; margin-right: auto;}
+      h2 {font-size: 30px;}
+      p {font-size: 20px;}
+      .bsd {top:0;right:0;position:fixed;}
+    </style>
+    <script src="js/jquery.js"></script>
+    <script src="js/popup.js"></script>
+  </head>
+
+  <body>
+    <div class="bsd">בס"ד</div>
+      <img src="icons/logo.png" width="75" height="75">
+      <h2>Video Speed</h2>
+      <p>The speed right now is: <span id="speed">--</span></p>
+
+      <div class="controls">
+        <button id="fast">+</button>
+        <button id="reset">Resert</button>
+        <button id="slow">-</button>
+      </div>
+  </body>
+</html>
