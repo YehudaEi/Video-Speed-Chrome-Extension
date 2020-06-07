@@ -13,4 +13,8 @@ function updateSpeed(speed = "1") {
     for(var i = 0; i < videos.length; i++){
         videos[i].playbackRate = speed;
     }
+    audios = document.getElementsByTagName("audio");
+    for(var i = 0; i < audios.length; i++){
+        audios[i].playbackRate = speed;
+    }
 }

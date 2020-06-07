@@ -1,43 +1,59 @@
-function updateSpeed(speed = "--") {
+function updateStorageSpeed(speed = "--") {
     $("#speed").text(speed);
     chrome.storage.local.set({
         speed: speed
     });
 }
 
+function validSpeed(speed) {
+    if(speed > 50 || speed < 0.25)
+        return false;
+    return true;
+}
+
+function showError(message) {
+    document.getElementById('error').innerHTML = message;
+}
+
+function hideError() {
+    document.getElementById('error').innerHTML = "";
+}
+
+function updateSpeed(newSpeed){
+    if(!validSpeed(newSpeed))
+        showError("Invalid Speed (try change to " + newSpeed + ")");
+    else{
+        hideError();
+        updateStorageSpeed(newSpeed);
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { message: "CHANGE_SPEED" });
+        });
+    }
+}
 
 $(function () {
     chrome.storage.local.get("speed", function (result) {
-        if (result.speed == null)
-            result.speed = "1";
+        if (result.speed == undefined)
+            result.speed = 1;
         updateSpeed(result.speed);
     });
 
     $("#fast").click(function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.storage.local.get('speed', function(result) {
-                var newSpeed = result.speed + 0.25;
-                updateSpeed(newSpeed);
-                chrome.tabs.sendMessage(tabs[0].id, { message: "CHANGE_SPEED" });
-            });
+        chrome.storage.local.get('speed', function(result) {
+            var newSpeed = result.speed + 0.25;
+            updateSpeed(newSpeed);
         });
     });
 
     $("#reset").click(function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            var newSpeed = 1;
-            updateSpeed(newSpeed);
-            chrome.tabs.sendMessage(tabs[0].id, { message: "CHANGE_SPEED" });
-        });
+        var newSpeed = 1;
+        updateSpeed(newSpeed);
     });
 
     $("#slow").click(function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.storage.local.get('speed', function(result) {
-                var newSpeed = result.speed - 0.25;
-                updateSpeed(newSpeed);
-                chrome.tabs.sendMessage(tabs[0].id, { message: "CHANGE_SPEED" });
-            });
+        chrome.storage.local.get('speed', function(result) {
+            var newSpeed = result.speed - 0.25;
+            updateSpeed(newSpeed);
         });
     })
   });
