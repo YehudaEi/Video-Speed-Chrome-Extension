@@ -33,7 +33,7 @@ function updateSpeed(newSpeed) {
 
 $(function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { message: "UPDATE" }, function (response) {
+        chrome.tabs.sendMessage(tabs[0].id, { message: "INIT" }, function (response) {
             chrome.storage.local.get("speed", function (result) {
                 if (result.speed == undefined)
                     result.speed = 1;

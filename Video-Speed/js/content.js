@@ -5,8 +5,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             updateSpeed(result.speed);
         });
     }
-    if (message == "UPDATE") {
-        updateSpeedVariable();
+    if (message == "INIT") {
+        updateStorageToRealSpeed();
         sendResponse({ message: "DONE" });
     }
 });
@@ -22,7 +22,7 @@ function updateSpeed(speed = "1") {
     }
 }
 
-function updateSpeedVariable() {
+function updateStorageToRealSpeed() {
     var playbackRate = document.getElementsByTagName("video")[0].playbackRate;
     chrome.storage.local.set({
         speed: playbackRate
