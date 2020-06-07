@@ -6,7 +6,7 @@ function updateStorageSpeed(speed = "--") {
 }
 
 function validSpeed(speed) {
-    if(speed > 50 || speed < 0.25)
+    if (speed > 50 || speed < 0.25)
         return false;
     return true;
 }
@@ -19,27 +19,31 @@ function hideError() {
     document.getElementById('error').innerHTML = "";
 }
 
-function updateSpeed(newSpeed){
-    if(!validSpeed(newSpeed))
+function updateSpeed(newSpeed) {
+    if (!validSpeed(newSpeed))
         showError("Invalid Speed (try change to " + newSpeed + ")");
-    else{
+    else {
         hideError();
         updateStorageSpeed(newSpeed);
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, { message: "CHANGE_SPEED" });
         });
     }
 }
 
 $(function () {
-    chrome.storage.local.get("speed", function (result) {
-        if (result.speed == undefined)
-            result.speed = 1;
-        updateSpeed(result.speed);
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { message: "INIT" }, function (response) {
+            chrome.storage.local.get("speed", function (result) {
+                if (result.speed == undefined)
+                    result.speed = 1;
+                updateSpeed(result.speed);
+            });
+        });
     });
 
     $("#fast").click(function () {
-        chrome.storage.local.get('speed', function(result) {
+        chrome.storage.local.get('speed', function (result) {
             var newSpeed = result.speed + 0.25;
             updateSpeed(newSpeed);
         });
@@ -51,9 +55,9 @@ $(function () {
     });
 
     $("#slow").click(function () {
-        chrome.storage.local.get('speed', function(result) {
+        chrome.storage.local.get('speed', function (result) {
             var newSpeed = result.speed - 0.25;
             updateSpeed(newSpeed);
         });
     })
-  });
+});
