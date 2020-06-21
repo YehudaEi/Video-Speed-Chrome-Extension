@@ -6,6 +6,7 @@
   "name": "Video Speed",
   "permissions": ["*://*/*", "storage"],
   "content_scripts": [{
+    "all_frames": true,
     "js": ["js/jquery.js", "js/content.js"],
     "matches": ["*://*/*"]
   }],

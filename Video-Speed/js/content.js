@@ -23,8 +23,12 @@ function updateSpeed(speed = "1") {
 }
 
 function updateStorageToRealSpeed() {
-    var playbackRate = document.getElementsByTagName("video")[0].playbackRate;
-    chrome.storage.local.set({
-        speed: playbackRate
-    });
+    try {
+        var playbackRate = document.getElementsByTagName("video")[0].playbackRate;
+        chrome.storage.local.set({
+            speed: playbackRate
+        });
+    } catch (error) {
+        console.log("Error >> " + error);
+    }
 }
