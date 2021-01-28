@@ -42,6 +42,13 @@ $(function () {
         });
     });
 
+    $("#very_fast").click(function () {
+        chrome.storage.local.get('speed', function (result) {
+            var newSpeed = result.speed + 1;
+            updateSpeed(newSpeed);
+        });
+    });
+	
     $("#fast").click(function () {
         chrome.storage.local.get('speed', function (result) {
             var newSpeed = result.speed + 0.25;
@@ -60,4 +67,11 @@ $(function () {
             updateSpeed(newSpeed);
         });
     })
+	
+    $("#very_slow").click(function () {
+        chrome.storage.local.get('speed', function (result) {
+            var newSpeed = result.speed - 1;
+            updateSpeed(newSpeed);
+        });
+    });
 });
